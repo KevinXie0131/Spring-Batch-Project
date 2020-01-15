@@ -77,12 +77,19 @@ public class SpringBatchConfig {
 
     @Bean
     protected Step step1(ItemReader<Transaction> reader, ItemProcessor<Transaction, Transaction> processor, ItemWriter<Transaction> writer) {
-        return steps.get("step1").<Transaction, Transaction>chunk(10).reader(reader).processor(processor).writer(writer).build();
+        return steps.get("step1")
+                .<Transaction, Transaction>chunk(3)
+                .reader(reader)
+                .processor(processor)
+                .writer(writer)
+                .build();
     }
 
     @Bean(name = "firstBatchJob")
     public Job job(@Qualifier("step1") Step step1) {
-        return jobs.get("firstBatchJob").start(step1).build();
+        return jobs.get("firstBatchJob")
+                .start(step1)
+                .build();
     }
 
 }

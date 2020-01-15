@@ -6,7 +6,7 @@ import org.springframework.batch.item.ItemProcessor;
 public class CustomItemProcessor implements ItemProcessor<Transaction, Transaction> {
 
     public Transaction process(Transaction item) {
-        System.out.println("Processing..." + item);
+        System.out.println("Processing..." + item.getUsername() + " -> " + item.getUserId() + " -> " + item.getAmount() + " -> " + item.getAmount());
         return item;
     }
 }
