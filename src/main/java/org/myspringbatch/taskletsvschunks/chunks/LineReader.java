@@ -23,7 +23,9 @@ public class LineReader implements ItemReader<Line>, StepExecutionListener {
     @Override
     public Line read() throws Exception {
         Line line = fu.readLine();
-        if (line != null) logger.debug("Read line: " + line.toString());
+        if (line != null) {
+            logger.debug("Read line: " + line.toString());
+        }
         return line;
     }
 

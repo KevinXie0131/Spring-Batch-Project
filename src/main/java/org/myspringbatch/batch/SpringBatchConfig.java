@@ -1,10 +1,10 @@
 package org.myspringbatch.batch;
 
+import org.myspringbatch.batch.listener.*;
 import org.myspringbatch.batch.model.Transaction;
 import org.myspringbatch.batch.service.CustomItemProcessor;
 import org.myspringbatch.batch.service.RecordFieldSetMapper;
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.Step;
+import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.item.ItemProcessor;
@@ -78,10 +78,16 @@ public class SpringBatchConfig {
     @Bean
     protected Step step1(ItemReader<Transaction> reader, ItemProcessor<Transaction, Transaction> processor, ItemWriter<Transaction> writer) {
         return steps.get("step1")
-                .<Transaction, Transaction>chunk(3)
+                .listener(new MyJobExecutionListener())
+                .listener(new MyStepExecutionListener())
+                .listener(new MyChunkListener())
+                .<Transaction, Transaction>chunk(2)
                 .reader(reader)
+                .listener(new MyItemReadListener())
                 .processor(processor)
+                .listener(new MyItemProcessListener())
                 .writer(writer)
+                .listener(new MyItemWriteListener())
                 .build();
     }
 

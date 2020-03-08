@@ -18,7 +18,7 @@ public class LinesWriter implements ItemWriter<Line>, StepExecutionListener {
 
     @Override
     public void beforeStep(StepExecution stepExecution) {
-        fu = new FileUtils("output.csv");
+        fu = new FileUtils("chunk_output.csv");
         logger.debug("Line Writer initialized.");
     }
 
